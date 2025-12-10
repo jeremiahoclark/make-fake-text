@@ -280,8 +280,8 @@ export default function App() {
     <div style={{ minHeight: '100vh', backgroundColor: '#111827', padding: '24px', display: 'flex', gap: '24px' }}>
       {/* Controls Panel */}
       <div style={{ width: '384px', backgroundColor: '#1f2937', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px', overflowY: 'auto', maxHeight: '100vh' }}>
-        <h1 style={{ fontSize: '20px', fontWeight: '600', color: 'white', marginBottom: '8px' }}>iMessage Generator</h1>
-        <p style={{ fontSize: '14px', color: '#9ca3af', marginBottom: '8px' }}>Create realistic iMessage conversations for videos, presentations, and mockups.</p>
+        <h1 style={{ fontSize: '20px', fontWeight: '600', color: 'white', marginBottom: '8px' }}>Fake Text Message Generator</h1>
+        <p style={{ fontSize: '14px', color: '#9ca3af', marginBottom: '8px' }}>Create realistic fake text messages for iPhone. Perfect for videos, presentations, and social media content.</p>
 
         {/* Contact Settings */}
         <div>
@@ -316,6 +316,40 @@ export default function App() {
             style={{ width: '100%', backgroundColor: '#374151', color: 'white', borderRadius: '8px', padding: '8px 16px', border: 'none', outline: 'none', boxSizing: 'border-box' }}
             placeholder="9:41"
           />
+        </div>
+
+        {/* Dark Mode Toggle */}
+        <div style={{ backgroundColor: '#374151', borderRadius: '12px', padding: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <h3 style={{ fontSize: '14px', fontWeight: '600', color: 'white', marginBottom: '4px' }}>Dark Mode</h3>
+              <p style={{ fontSize: '12px', color: '#9ca3af' }}>Black background for fake text messages</p>
+            </div>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              style={{
+                width: '52px',
+                height: '28px',
+                borderRadius: '14px',
+                border: 'none',
+                backgroundColor: darkMode ? '#22c55e' : '#4b5563',
+                cursor: 'pointer',
+                position: 'relative',
+                transition: 'background-color 0.2s'
+              }}
+            >
+              <div style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '12px',
+                backgroundColor: 'white',
+                position: 'absolute',
+                top: '2px',
+                left: darkMode ? '26px' : '2px',
+                transition: 'left 0.2s'
+              }} />
+            </button>
+          </div>
         </div>
 
         {/* Timing Controls */}
