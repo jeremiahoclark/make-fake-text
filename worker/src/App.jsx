@@ -47,6 +47,7 @@ export default function App() {
   const [isRecording, setIsRecording] = useState(false)
   const [recordingStatus, setRecordingStatus] = useState('')
   const [darkMode, setDarkMode] = useState(false)
+  const [osMode, setOsMode] = useState('iOS')
 
   const messagesEndRef = useRef(null)
   const timeoutRef = useRef(null)
@@ -318,6 +319,48 @@ export default function App() {
           />
         </div>
 
+        {/* OS Mode Toggle */}
+        <div style={{ backgroundColor: '#374151', borderRadius: '12px', padding: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <h3 style={{ fontSize: '14px', fontWeight: '600', color: 'white', marginBottom: '4px' }}>OS Style</h3>
+              <p style={{ fontSize: '12px', color: '#9ca3af' }}>Switch between iOS and Android layout</p>
+            </div>
+            <div style={{ display: 'flex', backgroundColor: '#4b5563', borderRadius: '8px', padding: '2px' }}>
+              <button
+                onClick={() => setOsMode('iOS')}
+                style={{
+                  padding: '4px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: osMode === 'iOS' ? '#3b82f6' : 'transparent',
+                  color: 'white',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                iOS
+              </button>
+              <button
+                onClick={() => setOsMode('Android')}
+                style={{
+                  padding: '4px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: osMode === 'Android' ? '#3b82f6' : 'transparent',
+                  color: 'white',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                Android
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Dark Mode Toggle */}
         <div style={{ backgroundColor: '#374151', borderRadius: '12px', padding: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -556,50 +599,92 @@ export default function App() {
         </p>
       </div>
 
-      {/* iPhone Preview */}
+      {/* Phone Preview */}
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ position: 'relative' }} ref={phoneRef}>
-          {/* iPhone Frame */}
+          {/* Phone Frame */}
           <div style={{ width: '375px', height: '812px', backgroundColor: 'black', borderRadius: '55px', padding: '14px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
             {/* Screen */}
-            <div style={{ width: '100%', height: '100%', backgroundColor: darkMode ? '#000000' : 'white', borderRadius: '41px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ width: '100%', height: '100%', backgroundColor: darkMode ? (osMode === 'iOS' ? '#000000' : '#121212') : 'white', borderRadius: '41px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              
               {/* Status Bar */}
-              <div style={{ height: '58px', backgroundColor: darkMode ? '#000000' : '#f9fafb', color: darkMode ? 'white' : 'black', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 32px 4px' }}>
-                <span style={{ fontSize: '14px', fontWeight: '600' }}>{currentTime}</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M2 17h2v4H2v-4zm4-5h2v9H6v-9zm4-4h2v13h-2V8zm4-3h2v16h-2V5z" />
-                  </svg>
-                  <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
-                  </svg>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ width: '24px', height: '12px', border: `1px solid ${darkMode ? 'white' : 'black'}`, borderRadius: '3px', display: 'flex', alignItems: 'center', padding: '1px' }}>
-                      <div style={{ width: '16px', height: '100%', backgroundColor: darkMode ? 'white' : 'black', borderRadius: '2px' }} />
+              {osMode === 'iOS' ? (
+                <div style={{ height: '58px', backgroundColor: darkMode ? '#000000' : '#f9fafb', color: darkMode ? 'white' : 'black', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 32px 4px' }}>
+                  <span style={{ fontSize: '14px', fontWeight: '600' }}>{currentTime}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M2 17h2v4H2v-4zm4-5h2v9H6v-9zm4-4h2v13h-2V8zm4-3h2v16h-2V5z" />
+                    </svg>
+                    <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+                    </svg>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <div style={{ width: '24px', height: '12px', border: `1px solid ${darkMode ? 'white' : 'black'}`, borderRadius: '3px', display: 'flex', alignItems: 'center', padding: '1px' }}>
+                        <div style={{ width: '16px', height: '100%', backgroundColor: darkMode ? 'white' : 'black', borderRadius: '2px' }} />
+                      </div>
+                      <div style={{ width: '2px', height: '6px', backgroundColor: darkMode ? 'white' : 'black', borderRadius: '0 2px 2px 0', marginLeft: '-1px' }} />
                     </div>
-                    <div style={{ width: '2px', height: '6px', backgroundColor: darkMode ? 'white' : 'black', borderRadius: '0 2px 2px 0', marginLeft: '-1px' }} />
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div style={{ height: '58px', backgroundColor: darkMode ? '#121212' : 'white', color: darkMode ? 'white' : 'black', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 24px 8px' }}>
+                  <span style={{ fontSize: '14px', fontWeight: '500' }}>{currentTime}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+                    </svg>
+                    <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+                    </svg>
+                  </div>
+                </div>
+              )}
 
-              {/* Navigation Bar */}
-              <div style={{ height: '56px', backgroundColor: darkMode ? '#000000' : '#f9fafb', borderBottom: `1px solid ${darkMode ? '#38383a' : '#e5e7eb'}`, display: 'flex', alignItems: 'center', padding: '0 16px' }}>
-                <button style={{ color: '#007AFF', display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-                  <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(to bottom right, #9ca3af, #6b7280)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '600', fontSize: '14px' }}>
+              {/* Navigation Bar / Header */}
+              {osMode === 'iOS' ? (
+                <div style={{ height: '56px', backgroundColor: darkMode ? '#000000' : '#f9fafb', borderBottom: `1px solid ${darkMode ? '#38383a' : '#e5e7eb'}`, display: 'flex', alignItems: 'center', padding: '0 16px' }}>
+                  <button style={{ color: '#007AFF', display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                    <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(to bottom right, #9ca3af, #6b7280)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '600', fontSize: '14px' }}>
+                      {contactAvatar}
+                    </div>
+                    <span style={{ fontSize: '11px', color: darkMode ? 'white' : '#000', fontWeight: '500' }}>{contactName}</span>
+                  </div>
+                  <div style={{ width: '24px' }} />
+                </div>
+              ) : (
+                <div style={{ height: '64px', backgroundColor: darkMode ? '#121212' : 'white', display: 'flex', alignItems: 'center', padding: '0 16px', gap: '12px' }}>
+                   <button style={{ color: darkMode ? 'white' : 'black', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                    <svg style={{ width: '24px', height: '24px' }} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                  </button>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#8e24aa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '500', fontSize: '14px' }}>
                     {contactAvatar}
                   </div>
-                  <span style={{ fontSize: '11px', color: darkMode ? 'white' : '#000', fontWeight: '500' }}>{contactName}</span>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: '16px', color: darkMode ? 'white' : 'black', fontWeight: '500' }}>{contactName}</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '16px', color: darkMode ? 'white' : 'black' }}>
+                     <svg style={{ width: '24px', height: '24px' }} viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+                     </svg>
+                     <svg style={{ width: '24px', height: '24px' }} viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.27-.27.35-.66.24-1.01-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .72-.63.72-1.19v-3.44c0-.54-.45-.99-.99-.99z"/>
+                     </svg>
+                     <svg style={{ width: '24px', height: '24px' }} viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                     </svg>
+                  </div>
                 </div>
-                <div style={{ width: '24px' }} />
-              </div>
+              )}
 
               {/* Messages Area */}
-              <div style={{ flex: 1, backgroundColor: darkMode ? '#000000' : 'white', overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ flex: 1, backgroundColor: darkMode ? (osMode === 'iOS' ? '#000000' : '#121212') : 'white', overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {messageGroups.map((group, groupIndex) => (
                   <div
                     key={groupIndex}
@@ -616,17 +701,34 @@ export default function App() {
                       const isOnly = group.messages.length === 1
 
                       let borderRadius
-                      if (group.sender === 'me') {
-                        if (isOnly) borderRadius = '20px 20px 4px 20px'
-                        else if (isFirst) borderRadius = '20px 20px 4px 20px'
-                        else if (isLast) borderRadius = '20px 4px 20px 20px'
-                        else borderRadius = '20px 4px 4px 20px'
+                      if (osMode === 'iOS') {
+                        if (group.sender === 'me') {
+                          if (isOnly) borderRadius = '20px 20px 4px 20px'
+                          else if (isFirst) borderRadius = '20px 20px 4px 20px'
+                          else if (isLast) borderRadius = '20px 4px 20px 20px'
+                          else borderRadius = '20px 4px 4px 20px'
+                        } else {
+                          if (isOnly) borderRadius = '20px 20px 20px 4px'
+                          else if (isFirst) borderRadius = '20px 20px 20px 4px'
+                          else if (isLast) borderRadius = '4px 20px 20px 20px'
+                          else borderRadius = '4px 20px 20px 4px'
+                        }
                       } else {
-                        if (isOnly) borderRadius = '20px 20px 20px 4px'
-                        else if (isFirst) borderRadius = '20px 20px 20px 4px'
-                        else if (isLast) borderRadius = '4px 20px 20px 20px'
-                        else borderRadius = '4px 20px 20px 4px'
+                        // Android styles
+                        if (group.sender === 'me') {
+                            borderRadius = '20px 20px 4px 20px'
+                        } else {
+                            borderRadius = '20px 20px 20px 4px'
+                        }
                       }
+
+                      const bg = osMode === 'iOS'
+                        ? (group.sender === 'me' ? '#007AFF' : (darkMode ? '#26252a' : '#E9E9EB'))
+                        : (group.sender === 'me' ? '#0b57cf' : (darkMode ? '#303030' : '#f2f2f2'))
+
+                      const color = osMode === 'iOS'
+                        ? (group.sender === 'me' ? 'white' : (darkMode ? 'white' : 'black'))
+                        : (group.sender === 'me' ? 'white' : (darkMode ? '#e3e3e3' : '#1f1f1f'))
 
                       return (
                         <div
@@ -636,14 +738,18 @@ export default function App() {
                             maxWidth: '70%',
                             padding: '8px 12px',
                             borderRadius,
-                            backgroundColor: group.sender === 'me' ? '#007AFF' : (darkMode ? '#26252a' : '#E9E9EB'),
-                            color: group.sender === 'me' ? 'white' : (darkMode ? 'white' : 'black'),
+                            backgroundColor: bg,
+                            color: color,
+                            boxShadow: osMode === 'Android' && group.sender === 'them' ? '0 1px 2px rgba(0,0,0,0.1)' : 'none'
                           }}
                         >
                           <p style={{ fontSize: '16px', lineHeight: 1.3, wordBreak: 'break-word', margin: 0 }}>{msg.text}</p>
                         </div>
                       )
                     })}
+                    {osMode === 'Android' && group.sender === 'them' && groupIndex === messageGroups.length - 1 && (
+                         <div style={{ fontSize: '11px', color: darkMode ? '#aaaaaa' : '#666666', marginTop: '2px', marginLeft: '4px' }}>Just now</div>
+                    )}
                   </div>
                 ))}
 
@@ -653,7 +759,7 @@ export default function App() {
                     className="message-animate"
                     style={{ display: 'flex', alignItems: 'flex-start' }}
                   >
-                    <div style={{ backgroundColor: darkMode ? '#26252a' : '#E9E9EB', borderRadius: '20px', padding: '12px 16px', display: 'flex', gap: '5px', alignItems: 'center' }}>
+                    <div style={{ backgroundColor: osMode === 'iOS' ? (darkMode ? '#26252a' : '#E9E9EB') : (darkMode ? '#303030' : '#f2f2f2'), borderRadius: '20px', padding: '12px 16px', display: 'flex', gap: '5px', alignItems: 'center' }}>
                       <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: darkMode ? '#636366' : '#8E8E93', borderRadius: '50%' }} />
                       <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: darkMode ? '#636366' : '#8E8E93', borderRadius: '50%' }} />
                       <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: darkMode ? '#636366' : '#8E8E93', borderRadius: '50%' }} />
@@ -665,78 +771,129 @@ export default function App() {
               </div>
 
               {/* Input Bar */}
-              <div style={{
-                minHeight: '52px',
-                backgroundColor: darkMode ? '#1c1c1e' : '#f6f6f6',
-                borderTop: `1px solid ${darkMode ? '#38383a' : '#e5e5e5'}`,
-                display: 'flex',
-                alignItems: 'center',
-                padding: '8px 8px 8px 4px',
-                gap: '6px'
-              }}>
-                {/* Plus button */}
-                <button style={{
-                  color: '#007AFF',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <svg style={{ width: '28px', height: '28px' }} viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-                  </svg>
-                </button>
-
-                {/* Text input field */}
+              {osMode === 'iOS' ? (
                 <div style={{
-                  flex: 1,
-                  height: '36px',
-                  backgroundColor: darkMode ? '#1c1c1e' : 'white',
-                  border: `1px solid ${darkMode ? '#38383a' : '#c8c8c8'}`,
-                  borderRadius: '18px',
-                  padding: '0 12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
+                    minHeight: '52px',
+                    backgroundColor: darkMode ? '#1c1c1e' : '#f6f6f6',
+                    borderTop: `1px solid ${darkMode ? '#38383a' : '#e5e5e5'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '8px 8px 8px 4px',
+                    gap: '6px'
                 }}>
-                  <span style={{ color: darkMode ? '#8e8e93' : '#8e8e93', fontSize: '16px' }}>iMessage</span>
-                  <svg style={{ width: '24px', height: '24px', color: '#8e8e93' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <circle cx="12" cy="12" r="10"/>
-                    <circle cx="9" cy="10" r="1.5" fill="currentColor"/>
-                    <circle cx="15" cy="10" r="1.5" fill="currentColor"/>
-                    <path d="M8 14s1.5 2 4 2 4-2 4-2" strokeLinecap="round"/>
-                  </svg>
-                </div>
+                    <button style={{
+                    color: '#007AFF',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                    }}>
+                    <svg style={{ width: '28px', height: '28px' }} viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                    </svg>
+                    </button>
 
-                {/* Audio message button */}
-                <button style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                    <div style={{
+                    flex: 1,
+                    height: '36px',
+                    backgroundColor: darkMode ? '#1c1c1e' : 'white',
+                    border: `1px solid ${darkMode ? '#38383a' : '#c8c8c8'}`,
+                    borderRadius: '18px',
+                    padding: '0 12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                    }}>
+                    <span style={{ color: darkMode ? '#8e8e93' : '#8e8e93', fontSize: '16px' }}>iMessage</span>
+                    <svg style={{ width: '24px', height: '24px', color: '#8e8e93' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="9" cy="10" r="1.5" fill="currentColor"/>
+                        <circle cx="15" cy="10" r="1.5" fill="currentColor"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2" strokeLinecap="round"/>
+                    </svg>
+                    </div>
+
+                    <button style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                    }}>
+                    <svg style={{ width: '28px', height: '28px', color: '#007AFF' }} viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                    </button>
+                </div>
+              ) : (
+                <div style={{
+                    minHeight: '64px',
+                    backgroundColor: darkMode ? '#121212' : 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '8px 16px',
+                    gap: '12px'
                 }}>
-                  <svg style={{ width: '28px', height: '28px', color: '#007AFF' }} viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                  </svg>
-                </button>
-              </div>
+                   <div style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: darkMode ? '#303030' : '#e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                       <svg style={{ width: '16px', height: '16px', color: darkMode ? 'white' : 'black' }} viewBox="0 0 24 24" fill="currentColor">
+                           <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                       </svg>
+                   </div>
+                   
+                   <div style={{ 
+                       flex: 1, 
+                       height: '44px', 
+                       backgroundColor: darkMode ? '#303030' : '#f2f2f2', 
+                       borderRadius: '22px', 
+                       padding: '0 16px', 
+                       display: 'flex', 
+                       alignItems: 'center',
+                       justifyContent: 'space-between'
+                    }}>
+                       <span style={{ color: '#757575', fontSize: '16px' }}>Text message</span>
+                       <svg style={{ width: '24px', height: '24px', color: '#757575' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                          <circle cx="8.5" cy="8.5" r="1.5"/>
+                          <polyline points="21 15 16 10 5 21"/>
+                       </svg>
+                   </div>
+                   
+                   <button style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#0b57cf'
+                    }}>
+                        <svg style={{ width: '28px', height: '28px' }} viewBox="0 0 24 24" fill="currentColor">
+                           <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                   </button>
+                </div>
+              )}
 
               {/* Home Indicator */}
-              <div style={{ height: '34px', backgroundColor: darkMode ? '#000000' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '134px', height: '5px', backgroundColor: darkMode ? '#ffffff' : 'black', borderRadius: '3px' }} />
+              <div style={{ height: '34px', backgroundColor: darkMode ? (osMode === 'iOS' ? '#000000' : '#121212') : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: osMode === 'iOS' ? '134px' : '72px', height: osMode === 'iOS' ? '5px' : '2px', backgroundColor: darkMode ? '#ffffff' : 'black', borderRadius: '3px', opacity: osMode === 'iOS' ? 1 : 0.4 }} />
               </div>
             </div>
           </div>
 
-          {/* Dynamic Island */}
-          <div style={{ position: 'absolute', top: '26px', left: '50%', transform: 'translateX(-50%)', width: '120px', height: '35px', backgroundColor: 'black', borderRadius: '20px' }} />
+          {/* Dynamic Island / Hole Punch */}
+          {osMode === 'iOS' ? (
+              <div style={{ position: 'absolute', top: '26px', left: '50%', transform: 'translateX(-50%)', width: '120px', height: '35px', backgroundColor: 'black', borderRadius: '20px' }} />
+          ) : (
+              <div style={{ position: 'absolute', top: '28px', left: '50%', transform: 'translateX(-50%)', width: '20px', height: '20px', backgroundColor: 'black', borderRadius: '50%' }} />
+          )}
         </div>
       </div>
     </div>
