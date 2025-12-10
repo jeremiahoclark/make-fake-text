@@ -562,9 +562,9 @@ export default function App() {
           {/* iPhone Frame */}
           <div style={{ width: '375px', height: '812px', backgroundColor: 'black', borderRadius: '55px', padding: '14px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
             {/* Screen */}
-            <div style={{ width: '100%', height: '100%', backgroundColor: 'white', borderRadius: '41px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ width: '100%', height: '100%', backgroundColor: darkMode ? '#000000' : 'white', borderRadius: '41px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
               {/* Status Bar */}
-              <div style={{ height: '58px', backgroundColor: '#f9fafb', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 32px 4px' }}>
+              <div style={{ height: '58px', backgroundColor: darkMode ? '#000000' : '#f9fafb', color: darkMode ? 'white' : 'black', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 32px 4px' }}>
                 <span style={{ fontSize: '14px', fontWeight: '600' }}>{currentTime}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <svg style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24" fill="currentColor">
@@ -574,16 +574,16 @@ export default function App() {
                     <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
                   </svg>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ width: '24px', height: '12px', border: '1px solid black', borderRadius: '3px', display: 'flex', alignItems: 'center', padding: '1px' }}>
-                      <div style={{ width: '16px', height: '100%', backgroundColor: 'black', borderRadius: '2px' }} />
+                    <div style={{ width: '24px', height: '12px', border: `1px solid ${darkMode ? 'white' : 'black'}`, borderRadius: '3px', display: 'flex', alignItems: 'center', padding: '1px' }}>
+                      <div style={{ width: '16px', height: '100%', backgroundColor: darkMode ? 'white' : 'black', borderRadius: '2px' }} />
                     </div>
-                    <div style={{ width: '2px', height: '6px', backgroundColor: 'black', borderRadius: '0 2px 2px 0', marginLeft: '-1px' }} />
+                    <div style={{ width: '2px', height: '6px', backgroundColor: darkMode ? 'white' : 'black', borderRadius: '0 2px 2px 0', marginLeft: '-1px' }} />
                   </div>
                 </div>
               </div>
 
               {/* Navigation Bar */}
-              <div style={{ height: '56px', backgroundColor: '#f9fafb', borderBottom: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', padding: '0 16px' }}>
+              <div style={{ height: '56px', backgroundColor: darkMode ? '#000000' : '#f9fafb', borderBottom: `1px solid ${darkMode ? '#38383a' : '#e5e7eb'}`, display: 'flex', alignItems: 'center', padding: '0 16px' }}>
                 <button style={{ color: '#007AFF', display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                   <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
@@ -593,13 +593,13 @@ export default function App() {
                   <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(to bottom right, #9ca3af, #6b7280)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '600', fontSize: '14px' }}>
                     {contactAvatar}
                   </div>
-                  <span style={{ fontSize: '11px', color: '#000', fontWeight: '500' }}>{contactName}</span>
+                  <span style={{ fontSize: '11px', color: darkMode ? 'white' : '#000', fontWeight: '500' }}>{contactName}</span>
                 </div>
                 <div style={{ width: '24px' }} />
               </div>
 
               {/* Messages Area */}
-              <div style={{ flex: 1, backgroundColor: 'white', overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ flex: 1, backgroundColor: darkMode ? '#000000' : 'white', overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {messageGroups.map((group, groupIndex) => (
                   <div
                     key={groupIndex}
@@ -636,8 +636,8 @@ export default function App() {
                             maxWidth: '70%',
                             padding: '8px 12px',
                             borderRadius,
-                            backgroundColor: group.sender === 'me' ? '#007AFF' : '#E9E9EB',
-                            color: group.sender === 'me' ? 'white' : 'black',
+                            backgroundColor: group.sender === 'me' ? '#007AFF' : (darkMode ? '#26252a' : '#E9E9EB'),
+                            color: group.sender === 'me' ? 'white' : (darkMode ? 'white' : 'black'),
                           }}
                         >
                           <p style={{ fontSize: '16px', lineHeight: 1.3, wordBreak: 'break-word', margin: 0 }}>{msg.text}</p>
@@ -653,10 +653,10 @@ export default function App() {
                     className="message-animate"
                     style={{ display: 'flex', alignItems: 'flex-start' }}
                   >
-                    <div style={{ backgroundColor: '#E9E9EB', borderRadius: '20px', padding: '12px 16px', display: 'flex', gap: '5px', alignItems: 'center' }}>
-                      <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: '#8E8E93', borderRadius: '50%' }} />
-                      <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: '#8E8E93', borderRadius: '50%' }} />
-                      <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: '#8E8E93', borderRadius: '50%' }} />
+                    <div style={{ backgroundColor: darkMode ? '#26252a' : '#E9E9EB', borderRadius: '20px', padding: '12px 16px', display: 'flex', gap: '5px', alignItems: 'center' }}>
+                      <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: darkMode ? '#636366' : '#8E8E93', borderRadius: '50%' }} />
+                      <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: darkMode ? '#636366' : '#8E8E93', borderRadius: '50%' }} />
+                      <div className="typing-dot" style={{ width: '8px', height: '8px', backgroundColor: darkMode ? '#636366' : '#8E8E93', borderRadius: '50%' }} />
                     </div>
                   </div>
                 )}
@@ -667,8 +667,8 @@ export default function App() {
               {/* Input Bar */}
               <div style={{
                 minHeight: '52px',
-                backgroundColor: '#f6f6f6',
-                borderTop: '1px solid #e5e5e5',
+                backgroundColor: darkMode ? '#1c1c1e' : '#f6f6f6',
+                borderTop: `1px solid ${darkMode ? '#38383a' : '#e5e5e5'}`,
                 display: 'flex',
                 alignItems: 'center',
                 padding: '8px 8px 8px 4px',
@@ -694,15 +694,15 @@ export default function App() {
                 <div style={{
                   flex: 1,
                   height: '36px',
-                  backgroundColor: 'white',
-                  border: '1px solid #c8c8c8',
+                  backgroundColor: darkMode ? '#1c1c1e' : 'white',
+                  border: `1px solid ${darkMode ? '#38383a' : '#c8c8c8'}`,
                   borderRadius: '18px',
                   padding: '0 12px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}>
-                  <span style={{ color: '#8e8e93', fontSize: '16px' }}>iMessage</span>
+                  <span style={{ color: darkMode ? '#8e8e93' : '#8e8e93', fontSize: '16px' }}>iMessage</span>
                   <svg style={{ width: '24px', height: '24px', color: '#8e8e93' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <circle cx="12" cy="12" r="10"/>
                     <circle cx="9" cy="10" r="1.5" fill="currentColor"/>
@@ -729,8 +729,8 @@ export default function App() {
               </div>
 
               {/* Home Indicator */}
-              <div style={{ height: '34px', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '134px', height: '5px', backgroundColor: 'black', borderRadius: '3px' }} />
+              <div style={{ height: '34px', backgroundColor: darkMode ? '#000000' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '134px', height: '5px', backgroundColor: darkMode ? '#ffffff' : 'black', borderRadius: '3px' }} />
               </div>
             </div>
           </div>
