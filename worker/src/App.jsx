@@ -52,6 +52,7 @@ export default function App() {
   const messagesEndRef = useRef(null)
   const timeoutRef = useRef(null)
   const phoneRef = useRef(null)
+  const screenRef = useRef(null) // Inner screen for recording
   const mediaRecorderRef = useRef(null)
   const chunksRef = useRef([])
 
@@ -106,14 +107,14 @@ export default function App() {
   }, [isPlaying, visibleCount, allMessages, messageDelay, typingDuration, isRecording])
 
   const startRecording = useCallback(async () => {
-    if (!phoneRef.current) return
+    if (!screenRef.current) return
 
     try {
       setRecordingStatus('Starting recording...')
 
-      const phoneElement = phoneRef.current
+      const screenElement = screenRef.current
       const canvas = document.createElement('canvas')
-      const rect = phoneElement.getBoundingClientRect()
+      const rect = screenElement.getBoundingClientRect()
       canvas.width = rect.width * 2
       canvas.height = rect.height * 2
       const ctx = canvas.getContext('2d')
@@ -168,7 +169,7 @@ export default function App() {
 
         try {
           const html2canvas = (await import('html2canvas')).default
-          const capturedCanvas = await html2canvas(phoneElement, {
+          const capturedCanvas = await html2canvas(screenElement, {
             scale: 2,
             useCORS: true,
             logging: false,
@@ -430,6 +431,39 @@ export default function App() {
           </div>
         </div>
 
+        {/* Script Input */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label style={{ display: 'block', fontSize: '14px', color: '#9ca3af', marginBottom: '4px' }}>
+            Script <span style={{ color: '#6b7280' }}>(me: or them:)</span>
+          </label>
+          <textarea
+            value={scriptText}
+            onChange={(e) => {
+              setScriptText(e.target.value)
+              const parsed = parseScriptText(e.target.value)
+              setAllMessages(parsed)
+            }}
+            style={{
+              width: '100%',
+              height: '120px',
+              backgroundColor: '#374151',
+              color: 'white',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              border: 'none',
+              outline: 'none',
+              fontFamily: 'monospace',
+              fontSize: '14px',
+              resize: 'none',
+              boxSizing: 'border-box'
+            }}
+            placeholder="me: Hello!&#10;them: Hi there!"
+          />
+          <p style={{ fontSize: '11px', color: '#6b7280', marginTop: '4px' }}>
+            Use "me:" for blue bubbles, "them:" for gray bubbles
+          </p>
+        </div>
+
         {/* Playback Controls */}
         <div style={{ display: 'flex', gap: '8px' }}>
           <button
@@ -551,52 +585,6 @@ export default function App() {
           {isRecording && <span style={{ marginLeft: '8px', color: '#ef4444' }}>Recording</span>}
         </div>
 
-        {/* Script Input */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <label style={{ display: 'block', fontSize: '14px', color: '#9ca3af', marginBottom: '4px' }}>
-            Script <span style={{ color: '#6b7280' }}>(me: or them:)</span>
-          </label>
-          <textarea
-            value={scriptText}
-            onChange={(e) => setScriptText(e.target.value)}
-            style={{
-              width: '100%',
-              height: '120px',
-              backgroundColor: '#374151',
-              color: 'white',
-              borderRadius: '8px',
-              padding: '12px 16px',
-              border: 'none',
-              outline: 'none',
-              fontFamily: 'monospace',
-              fontSize: '14px',
-              resize: 'none',
-              boxSizing: 'border-box'
-            }}
-            placeholder="me: Hello!&#10;them: Hi there!"
-          />
-        </div>
-
-        <button
-          onClick={parseScript}
-          style={{
-            width: '100%',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            fontWeight: '600',
-            borderRadius: '12px',
-            padding: '12px',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
-          Generate Messages
-        </button>
-
-        <p style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center' }}>
-          Use "me:" for blue bubbles (right side)<br />
-          Use "them:" for gray bubbles (left side)
-        </p>
       </div>
 
       {/* Phone Preview */}
@@ -605,7 +593,7 @@ export default function App() {
           {/* Phone Frame */}
           <div style={{ width: '375px', height: '812px', backgroundColor: 'black', borderRadius: '55px', padding: '14px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
             {/* Screen */}
-            <div style={{ width: '100%', height: '100%', backgroundColor: darkMode ? (osMode === 'iOS' ? '#000000' : '#121212') : 'white', borderRadius: '41px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <div ref={screenRef} style={{ width: '100%', height: '100%', backgroundColor: darkMode ? (osMode === 'iOS' ? '#000000' : '#121212') : 'white', borderRadius: '41px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
               
               {/* Status Bar */}
               {osMode === 'iOS' ? (
